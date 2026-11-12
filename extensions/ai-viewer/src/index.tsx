@@ -1,12 +1,19 @@
 import { id } from './id';
 import getPanelModule from './getPanelModule';
+import getCommandsModule from './getCommandsModule';
+import getToolbarModule from './getToolbarModule';
+import { registerIcons } from './icons';
 
 /**
  * Custom extension for the AI-first diagnostic viewer.
- * Add more modules here as needed (getToolbarModule, getCommandsModule, ...).
- * See extensions/test-extension and extensions/default for working examples.
+ * See extensions/test-extension and extensions/default for more module examples.
  */
 export default {
   id,
+  preRegistration: () => {
+    registerIcons();
+  },
   getPanelModule,
+  getCommandsModule,
+  getToolbarModule,
 };

@@ -41,6 +41,25 @@ All changes are kept out of OHIF's own code so upstream updates merge cleanly.
 - **Read viewer state:** use `servicesManager.services` (displaySetService, measurementService,
   viewportGridService, segmentationService, ...) and subscribe to their events, as the example panel does.
 
+## Feature: on-the-fly slab projection (MIP / MinIP / Average)
+
+![40 mm MIP of a synthetic helical vessel](custom-docs/mip-40mm.png)
+
+For CT, MR (and PT) series that can be built into a volume:
+
+- **Toolbar:** the **MIP** button (right end of the main toolbar) toggles MIP on the active viewport.
+- **Right panel → "Projection (MIP)" tab:** choose Off / MIP / MinIP / Average and set slab thickness
+  (slider 1–100 mm, or the 5/10/20/40 mm presets). Changes apply live.
+- Scroll as usual; the slab follows the current slice. Use the viewport orientation menu (top-left) for
+  coronal/sagittal projections. Your slice position is kept when switching on and off.
+- From code or a hotkey: `commandsManager.runCommand('aiSetProjection', { mode: 'mip', slabThickness: 20 })`
+  (`mode`: `off | mip | minip | avg`) or `runCommand('aiToggleMIP')`.
+
+How it works: the viewport is switched from a stack to a Cornerstone volume viewport through OHIF's normal
+viewport pipeline, with a projection blend mode and slab thickness. Later changes are applied directly to the
+live viewport. Code: `extensions/ai-viewer/src/projection/projection.ts`, panel in
+`extensions/ai-viewer/src/panels/ProjectionPanel.tsx`, toolbar button in `config/custom.js` (`aiToolbar()`).
+
 ## Pull upstream updates
 
 ```bash

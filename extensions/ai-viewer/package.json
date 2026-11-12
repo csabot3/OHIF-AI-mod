@@ -17,6 +17,7 @@
     "start": "pnpm run dev"
   },
   "peerDependencies": {
+    "@cornerstonejs/core": "5.6.8",
     "@ohif/core": "workspace:*",
     "@ohif/ui-next": "workspace:*",
     "prop-types": "15.8.1",

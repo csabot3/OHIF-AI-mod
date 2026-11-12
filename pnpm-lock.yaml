@@ -369,6 +369,9 @@ importers:
       '@babel/runtime':
         specifier: 7.29.7
         version: 7.29.7
+      '@cornerstonejs/core':
+        specifier: 5.6.8
+        version: 5.6.8(@cornerstonejs/metadata@5.6.8)(@cornerstonejs/utils@5.6.8)(autoprefixer@10.4.27(postcss@8.5.26))(wslink@2.5.0)
       '@ohif/core':
         specifier: workspace:*
         version: link:../../platform/core

@@ -16,6 +16,47 @@
 // your own DICOMweb server. For a fully-featured setup with every data source
 // and customization loading enabled, see config/dev.js (local development) and
 // config/netlify.js (the public demo deploy).
+// ---- CUSTOM: toolbar additions (used in customizationService.mode below) ----
+// The toolbar layout is replaced per section, so 'primary' restates OHIF's
+// default button list with our buttons added at the end.
+function aiToolbar() {
+  return {
+    toolbarButtons: {
+      $push: [
+        {
+          id: 'AIToggleMIP',
+          uiType: 'ohif.toolButton',
+          props: {
+            icon: 'ai-mip',
+            label: 'MIP (on/off)',
+            tooltip: 'Toggle maximum intensity projection on the active CT/MR viewport',
+            commands: 'aiToggleMIP',
+            evaluate: 'evaluate.aiViewer.mip',
+          },
+        },
+      ],
+    },
+    toolbarSections: {
+      $push: [
+        {
+          primary: [
+            'MeasurementTools',
+            'Zoom',
+            'Pan',
+            'TrackballRotate',
+            'WindowLevel',
+            'Capture',
+            'Layout',
+            'Crosshairs',
+            'MoreTools',
+            'AIToggleMIP',
+          ],
+        },
+      ],
+    },
+  };
+}
+
 window.config = {
   name: 'config/custom.js',
   routerBasename: null,
@@ -35,9 +76,18 @@ window.config = {
   // ---- CUSTOM: add our extension's panel to the right sidebar of every mode ----
   customizationService: {
     mode: {
+      // Every mode: add our panels to the right sidebar.
       '*': {
-        rightPanels: { $push: ['@ohif/extension-ai-viewer.panelModule.aiAssistant'] },
+        rightPanels: {
+          $push: [
+            '@ohif/extension-ai-viewer.panelModule.projection',
+            '@ohif/extension-ai-viewer.panelModule.aiAssistant',
+          ],
+        },
       },
+      // Main viewer + basic viewer: add a MIP toggle to the main toolbar.
+      viewer: aiToolbar(),
+      basic: aiToolbar(),
     },
   },
 
