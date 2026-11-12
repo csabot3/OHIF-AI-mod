@@ -3,6 +3,7 @@ import getPanelModule from './getPanelModule';
 import getCommandsModule from './getCommandsModule';
 import getToolbarModule from './getToolbarModule';
 import { registerIcons } from './icons';
+import { installClaheHook } from './clahe/claheController';
 
 /**
  * Custom extension for the AI-first diagnostic viewer.
@@ -12,6 +13,7 @@ export default {
   id,
   preRegistration: () => {
     registerIcons();
+    installClaheHook();
   },
   getPanelModule,
   getCommandsModule,

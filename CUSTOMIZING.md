@@ -47,8 +47,8 @@ All changes are kept out of OHIF's own code so upstream updates merge cleanly.
 
 For CT, MR (and PT) series that can be built into a volume:
 
-- **Toolbar:** the **MIP** button (right end of the main toolbar) toggles MIP on the active viewport.
-- **Right panel → "Projection (MIP)" tab:** choose Off / MIP / MinIP / Average and set slab thickness
+- **Toolbar / shortcut:** the **MIP** button (right end of the main toolbar) or the **M** key toggles MIP on the active viewport.
+- **Right panel → "Image Tools" tab → Slab projection:** choose Off / MIP / MinIP / Average and set slab thickness
   (slider 1–100 mm, or the 5/10/20/40 mm presets). Changes apply live.
 - Scroll as usual; the slab follows the current slice. Use the viewport orientation menu (top-left) for
   coronal/sagittal projections. Your slice position is kept when switching on and off.
@@ -59,6 +59,28 @@ How it works: the viewport is switched from a stack to a Cornerstone volume view
 viewport pipeline, with a projection blend mode and slab thickness. Later changes are applied directly to the
 live viewport. Code: `extensions/ai-viewer/src/projection/projection.ts`, panel in
 `extensions/ai-viewer/src/panels/ProjectionPanel.tsx`, toolbar button in `config/custom.js` (`aiToolbar()`).
+
+## Feature: CLAHE contrast enhancement (X-ray)
+
+![CLAHE (High) on a synthetic chest X-ray](custom-docs/clahe-high.png)
+
+Contrast Limited Adaptive Histogram Equalization brings out subtle detail (bone edges, lines, nodules) across
+both dark and bright regions of an image. Built for X-ray (CR/DX/MG/XA), and works on any 2D viewport.
+
+- **Toolbar / shortcut:** the **CLAHE** button (histogram icon, next to MIP) or the **X** key toggles it on the
+  active viewport. The button turns blue while on.
+- **Right panel → "Image Tools" tab → CLAHE:** On/Off, **Low / Medium / High** presets, and sliders for
+  **clip limit** (strength, 1–8) and **tile grid** (how local the enhancement is, 2–16).
+- **Display only:** applied to the image as shown, after window/level, so it combines with W/L, zoom, pan and
+  annotations. Stored pixel values, measurements and exports are unchanged. Pure-black background is left black.
+- From code: `commandsManager.runCommand('aiSetCLAHE', { enabled: true, clipLimit: 3, tiles: 8 })`
+  or `runCommand('aiToggleCLAHE')`.
+
+How it works: after Cornerstone draws a viewport it fires `IMAGE_RENDERED`; a listener runs CLAHE on that
+viewport's canvas pixels (~25–30 ms for a full-screen viewport). Code: `extensions/ai-viewer/src/clahe/`
+(`clahe.ts` = algorithm, `claheController.ts` = per-viewport state + render hook), panel in
+`extensions/ai-viewer/src/panels/ClaheSection.tsx`. Shortcuts are in `config/custom.js`
+(`ohif.hotkeyBindings`) and can be changed in Settings → Hotkeys.
 
 ## Pull upstream updates
 

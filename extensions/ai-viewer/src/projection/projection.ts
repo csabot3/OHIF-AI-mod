@@ -52,8 +52,10 @@ export function subscribeProjection(fn: () => void) {
   listeners.add(fn);
   return { unsubscribe: () => listeners.delete(fn) };
 }
+let toolbarRefresh: (() => void) | null = null;
 function notify() {
   listeners.forEach(fn => fn());
+  toolbarRefresh?.();
 }
 
 export type ProjectionState = {
@@ -177,7 +179,9 @@ export function setProjection(
     viewportId,
   }: { mode: ProjectionMode; slabThickness?: number; viewportId?: string }
 ) {
-  const { viewportGridService, uiNotificationService } = servicesManager.services;
+  const { viewportGridService, uiNotificationService, toolbarService } = servicesManager.services;
+  toolbarRefresh = () =>
+    toolbarService?.refreshToolbarState?.({ viewportId: viewportGridService.getActiveViewportId() });
   const state = getProjectionState(servicesManager, viewportId);
   const { id, gridViewport, csViewport } = getContext(servicesManager, viewportId);
 

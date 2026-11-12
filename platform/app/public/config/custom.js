@@ -28,10 +28,21 @@ function aiToolbar() {
           uiType: 'ohif.toolButton',
           props: {
             icon: 'ai-mip',
-            label: 'MIP (on/off)',
-            tooltip: 'Toggle maximum intensity projection on the active CT/MR viewport',
+            label: 'MIP (M)',
+            tooltip: 'Toggle maximum intensity projection on the active CT/MR viewport — shortcut M',
             commands: 'aiToggleMIP',
             evaluate: 'evaluate.aiViewer.mip',
+          },
+        },
+        {
+          id: 'AIToggleCLAHE',
+          uiType: 'ohif.toolButton',
+          props: {
+            icon: 'ai-clahe',
+            label: 'CLAHE (X)',
+            tooltip: 'Adaptive contrast enhancement (CLAHE) on the active viewport — shortcut X',
+            commands: 'aiToggleCLAHE',
+            evaluate: 'evaluate.aiViewer.clahe',
           },
         },
       ],
@@ -49,6 +60,7 @@ function aiToolbar() {
             'Layout',
             'Crosshairs',
             'MoreTools',
+            'AIToggleCLAHE',
             'AIToggleMIP',
           ],
         },
@@ -78,9 +90,16 @@ window.config = {
     mode: {
       // Every mode: add our panels to the right sidebar.
       '*': {
+        // Keyboard shortcuts (also listed/editable in Settings > Hotkeys).
+        'ohif.hotkeyBindings': {
+          $push: [
+            { commandName: 'aiToggleCLAHE', label: 'CLAHE contrast enhancement', keys: ['x'], isEditable: true },
+            { commandName: 'aiToggleMIP', label: 'MIP on/off', keys: ['m'], isEditable: true },
+          ],
+        },
         rightPanels: {
           $push: [
-            '@ohif/extension-ai-viewer.panelModule.projection',
+            '@ohif/extension-ai-viewer.panelModule.imageTools',
             '@ohif/extension-ai-viewer.panelModule.aiAssistant',
           ],
         },
