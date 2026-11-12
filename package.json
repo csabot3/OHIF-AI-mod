@@ -22,6 +22,7 @@
     "dev:fast": "pnpm --filter @ohif/app run dev:fast",
     "show:config": "echo Config is $APP_CONFIG on $PUBLIC_URL",
     "dev": "pnpm --filter @ohif/app run dev:viewer",
+    "dev:custom": "pnpm --filter @ohif/app run dev:custom",
     "dev:no:cache": "pnpm --filter @ohif/app run dev:no:cache",
     "dev:project": ".scripts/dev.sh",
     "dev:orthanc": "pnpm --filter @ohif/app run dev:orthanc",

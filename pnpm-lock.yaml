@@ -364,6 +364,28 @@ importers:
         specifier: 1.56.1
         version: 1.56.1
 
+  extensions/ai-viewer:
+    dependencies:
+      '@babel/runtime':
+        specifier: 7.29.7
+        version: 7.29.7
+      '@ohif/core':
+        specifier: workspace:*
+        version: link:../../platform/core
+      '@ohif/ui-next':
+        specifier: workspace:*
+        version: link:../../platform/ui-next
+      prop-types:
+        specifier: 15.8.1
+        version: 15.8.1
+      react:
+        specifier: 18.3.1
+        version: 18.3.1
+    devDependencies:
+      cross-env:
+        specifier: 7.0.3
+        version: 7.0.3
+
   extensions/cornerstone:
     dependencies:
       '@babel/runtime':

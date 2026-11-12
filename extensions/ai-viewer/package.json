@@ -1,0 +1,31 @@
+{
+  "name": "@ohif/extension-ai-viewer",
+  "version": "3.13.14",
+  "description": "Custom extension for the AI-first diagnostic viewer",
+  "license": "MIT",
+  "private": true,
+  "main": "dist/ohif-extension-ai-viewer.umd.js",
+  "module": "src/index.tsx",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "clean": "shx rm -rf dist",
+    "dev": "cross-env NODE_ENV=development rspack build --config .webpack/webpack.dev.js --watch",
+    "build": "cross-env NODE_ENV=production rspack build --config .webpack/webpack.prod.js",
+    "build:package-1": "pnpm run build",
+    "start": "pnpm run dev"
+  },
+  "peerDependencies": {
+    "@ohif/core": "workspace:*",
+    "@ohif/ui-next": "workspace:*",
+    "prop-types": "15.8.1",
+    "react": "18.3.1"
+  },
+  "dependencies": {
+    "@babel/runtime": "7.29.7"
+  },
+  "devDependencies": {
+    "cross-env": "7.0.3"
+  }
+}

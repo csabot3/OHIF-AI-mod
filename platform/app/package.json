@@ -37,6 +37,7 @@
     "dev:dcm4chee": "cross-env NODE_ENV=development APP_CONFIG=config/local_dcm4chee.js rspack serve --config .webpack/webpack.pwa.js",
     "dev:static": "cross-env NODE_ENV=development APP_CONFIG=config/local_static.js rspack serve --config .webpack/webpack.pwa.js",
     "dev:viewer": "pnpm run dev",
+    "dev:custom": "cross-env NODE_ENV=development APP_CONFIG=config/custom.js rspack serve --config .webpack/webpack.pwa.js",
     "start": "pnpm run dev",
     "test:e2e": "cypress open",
     "test:e2e:local": "cypress run --config video=false --browser chrome --spec 'cypress/integration/common/**/*,cypress/integration/pwa/**/*'",
